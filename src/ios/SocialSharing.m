@@ -152,10 +152,11 @@
 - (bool)isAvailableForSharing:(CDVInvokedUrlCommand*)command
                          type:(NSString *) type {
     // wrapped in try-catch, because isAvailableForServiceType the app may crash if an invalid type is passed to isAvailableForServiceType
-    @try {
-        return [SLComposeViewController isAvailableForServiceType:type];
-    }
-    @catch (NSException* exception) {
+    if([type isEqualToString:@"twitter"]){
+        return [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter];
+    }else if([type isEqualToString:@"facebook"]){
+        return [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook];
+    }else{
         return false;
     }
 }
